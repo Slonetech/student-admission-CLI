@@ -1,1 +1,1 @@
-# student-admission-CLI
+# student-management-system
