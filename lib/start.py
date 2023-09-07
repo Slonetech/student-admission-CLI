@@ -1,8 +1,7 @@
 from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker,declarative_base
 import click
-# from tabulate import tabulate
+from tabulate import tabulate
 # Create a MySQL database (change the connection string as needed)
 DATABASE_URL = "sqlite:///student.db"
 engine = create_engine(DATABASE_URL)
@@ -107,17 +106,10 @@ def DISPLAY_STUDENT_INFORMATION():
     print("DISPLAYING STUDENT INFORMATION : \n")
 
     students = session.query(Student).all()
-    if students:
-        for student in students:
-            print("STUDENT ID:", student.id)
-            print("STUDENT NAME:", student.name)
-            print("STUDENT ROLL NUMBER:", student.roll_number)
-            print("STUDENT AGE:", student.age)
-            print("STUDENT CLASS:", student.class_name)
-            print("STUDENT EMAIL:", student.email)
-            print("STUDENT ADDRESS:", student.address)
-            print("STUDENT MOBILE NUMBER:", student.mobile_number)
-            print("\n")
+    if students :
+        raw_data = [(student.id, student.name, student.roll_number, student.age, student.class_name, student.email, student.address, student.mobile_number) for student in students]
+        print(tabulate(raw_data, headers=["ID", "NAME", "ROLL NUMBER", "AGE", "CLASS", "EMAIL", "ADDRESS", "MOBILE NUMBER"], tablefmt="grid"))
+          
     else:
         print("\n")
         print("\t NO STUDENT INFORMATION TO DISPLAY.")
