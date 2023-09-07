@@ -2,7 +2,7 @@ from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 import click
-from tabulate import tabulate
+# from tabulate import tabulate
 # Create a MySQL database (change the connection string as needed)
 DATABASE_URL = "sqlite:///student.db"
 engine = create_engine(DATABASE_URL)
@@ -123,34 +123,55 @@ def DISPLAY_STUDENT_INFORMATION():
         print("\t NO STUDENT INFORMATION TO DISPLAY.")
         print("\n")
 
-if __name__ == '__main__':
-    print("\n")
-    print("\t\t\t\t ' ********** WELCOME TO STUDENT MANAGEMENT SYSTEM ********** ' \n")
-    run = True
+  
+@click.command()
+@click.option("--create",is_flag=True, help="Create new student.")
+@click.option("--delete",is_flag=True, help="Delete student.")
+@click.option("--update",is_flag=True, help="Update student.")
+@click.option("--display",is_flag=True, help="Display student.")
+def main(create,delete,update,display):
+    if create:
+        ADD_STUDENT_INFORMATION()
+    elif delete:
+        DELETE_STUDENT_INFORMATION()
+    elif update:
+        UPDATE_STUDENT_INFORMATION()
+    elif display:
+        DISPLAY_STUDENT_INFORMATION()
 
-    while run:
-        print("PRESS FROM THE FOLLOWING OPTION : \n")
-        print("PRESS 1 : TO ADD STUDENT INFORMATION.")
-        print("PRESS 2 : TO DELETE STUDENT INFORMATION.")
-        print("PRESS 3 : TO UPDATE STUDENT INFORMATION.")
-        print("PRESS 4 : TO DISPLAY STUDENT INFORMATION.")
-        print("PRESS 5 : TO EXIT SYSTEM.")
-
-        OPTION = int(input("ENTER YOUR OPTION : "))
+    else:
+         
         print("\n")
-        print(end="\n")
+        print("\t\t\t\t ' ********** WELCOME TO STUDENT MANAGEMENT SYSTEM ********** ' \n")
+        run = True
 
-        if OPTION == 1:
-            ADD_STUDENT_INFORMATION()
-        elif OPTION == 2:
-            DELETE_STUDENT_INFORMATION()
-        elif OPTION == 3:
-            UPDATE_STUDENT_INFORMATION()
-        elif OPTION == 4:
-            DISPLAY_STUDENT_INFORMATION()
-        elif OPTION == 5:
-            print("THANK YOU! VISIT AGAIN.")
-            run = False
-        else:
-            print("PLEASE CHOOSE THE CORRECT OPTION FROM THE FOLLOWING.")
+        while run:
+            print("PRESS FROM THE FOLLOWING OPTION : \n")
+            print("PRESS 1 : TO ADD STUDENT INFORMATION.")
+            print("PRESS 2 : TO DELETE STUDENT INFORMATION.")
+            print("PRESS 3 : TO UPDATE STUDENT INFORMATION.")
+            print("PRESS 4 : TO DISPLAY STUDENT INFORMATION.")
+            print("PRESS 5 : TO EXIT SYSTEM.")
+
+            OPTION = int(input("ENTER YOUR OPTION : "))
             print("\n")
+            print(end="\n")
+
+            if OPTION == 1:
+                ADD_STUDENT_INFORMATION()
+            elif OPTION == 2:
+                DELETE_STUDENT_INFORMATION()
+            elif OPTION == 3:
+                UPDATE_STUDENT_INFORMATION()
+            elif OPTION == 4:
+                DISPLAY_STUDENT_INFORMATION()
+            elif OPTION == 5:
+                print("THANK YOU! VISIT AGAIN.")
+                run = False
+            else:
+                print("PLEASE CHOOSE THE CORRECT OPTION FROM THE FOLLOWING.")
+                print("\n")
+
+if __name__ == '__main__':
+
+    main()
